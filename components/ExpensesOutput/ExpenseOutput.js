@@ -1,6 +1,7 @@
 import { StyleSheet,View } from "react-native";
 import ExpenseSummary from "./ExpenseSummary";
 import ExpenseList from './ExpenseList';
+import { GlobalColors } from "../../constants/colors";
 
 function ExpenseOutput({expense, period}){
     const Dummy_expense = [
@@ -31,12 +32,12 @@ function ExpenseOutput({expense, period}){
         {
             id: 'e5',
             description: 'Buss Pass',
-            amount: 1699.99,
+            amount: 199.99,
             data: new Date('2024-12-05'),
         }
     ]
     return (
-        <View>
+        <View style={styles.container}>
             <ExpenseSummary expense={Dummy_expense} expensesPeriod={period}/>
             <ExpenseList expenses={Dummy_expense}/>
         </View>
@@ -45,5 +46,9 @@ function ExpenseOutput({expense, period}){
 export default ExpenseOutput;
 
 const styles= StyleSheet.create({
-
+    container:{
+        flex: 1,
+        backgroundColor: GlobalColors.colors.primary700,
+        padding: 24,
+    }
 })
