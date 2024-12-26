@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { GlobalColors } from './constants/colors';
 import {Ionicons} from '@expo/vector-icons'
+import IconButton from './components/UI/IconButton';
 
 
 export default function App() {
@@ -24,6 +25,9 @@ export default function App() {
         tabBarStyle: {
           backgroundColor: GlobalColors.colors.primary500,
           },
+        headerRight: ({tintColor}) => (
+        <IconButton icon="add" size={24} color={tintColor} onPress={() => {}}/>
+        ),
       }  
     }>
             <Tab.Screen 
@@ -32,7 +36,7 @@ export default function App() {
               options={{
                 title: 'Recent Expenses',
                 tabBarLabel: 'Recent',
-                tabBarIcon: ({size, color}) => <Ionicons name="hourglass" size={size} color={color} />
+                tabBarIcon: ({size, color}) => <Ionicons name="hourglass" size={size} color={color} onPress={() => {}}/>
               }}
               />
             <Tab.Screen 
