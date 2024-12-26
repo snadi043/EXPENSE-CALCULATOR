@@ -5,8 +5,13 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import { GlobalColors } from '../../constants/colors';
 
 function ExpenseItem({description, date, amount}){
+
+    function expenseListPressHandler(){
+
+    }
+
     return (
-        <Pressable>
+        <Pressable onPress={expenseListPressHandler} style={({pressed}) => pressed && styles.pressed}>
             <View style={styles.expenseItemContainer}>
                 <View>
                     <Text style={[styles.textBatch ,styles.description]}>{description}</Text>
@@ -23,6 +28,9 @@ function ExpenseItem({description, date, amount}){
 }
 
 const styles = StyleSheet.create({
+    pressed: {
+        opacity: 0.75,
+    },
     expenseItemContainer:{
         padding: 12,
         marginVertical: 8,
