@@ -6,11 +6,13 @@ import { GlobalColors } from '../../constants/colors';
 import {useNavigation} from '@react-navigation/native';
 
 
-function ExpenseItem({description, date, amount}){
+function ExpenseItem({id, description, date, amount}){
 
     const navigation = useNavigation();
     function expenseListPressHandler(){
-        navigation.navigate('ManageExpenses');
+        navigation.navigate('ManageExpenses', {
+            expenseItemId: id,
+        });
         // console.log('pressed');
     }
 
