@@ -4,7 +4,7 @@ import { GlobalColors } from '../../constants/colors';
 function Button({onPress, children, style, mode}){
     return (
         <View style={style}>
-            <Pressable onPress={onPress} style={({pressed}) => {pressed && styles.pressed}}>
+            <Pressable onPress={onPress} style={({pressed}) => pressed && styles.pressed}>
                 <View style={[styles.button, mode === 'flat' && styles.flat]}>
                     <Text style={[styles.textButton, mode === 'flat' && styles.flatText]}>{children}</Text>
                 </View>
@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
     textButton:{
         textAlign: 'center',
         color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold'
     },
     pressed:{
         opacity: 0.75,
