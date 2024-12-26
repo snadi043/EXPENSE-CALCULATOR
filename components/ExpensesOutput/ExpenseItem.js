@@ -11,6 +11,7 @@ function ExpenseItem({description, date, amount}){
     const navigation = useNavigation();
     function expenseListPressHandler(){
         navigation.navigate('ManageExpenses');
+        // console.log('pressed');
     }
 
     return (
