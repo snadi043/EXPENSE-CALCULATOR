@@ -3,11 +3,14 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 // import {getFormattedDate} from './utilities/date';
 
 import { GlobalColors } from '../../constants/colors';
+import {useNavigation} from '@react-navigation/native';
+
 
 function ExpenseItem({description, date, amount}){
 
+    const navigation = useNavigation();
     function expenseListPressHandler(){
-
+        navigation.navigate('ManageExpenses');
     }
 
     return (
