@@ -21,15 +21,15 @@ function ManageExpenses({route}){
     });
 
     function deleteItemHandler(){
-
+        navigation.goBack();
     }
 
     function cancelButtonHandler(){
-
+        navigation.goBack();
     }
 
     function confirmButtonHandler(){
-
+        navigation.goBack();
     }
     
     return (
