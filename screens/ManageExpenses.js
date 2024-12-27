@@ -1,12 +1,12 @@
-import {View, StyleSheet} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { useContext, useLayoutEffect } from 'react';
+
+import {View, StyleSheet} from 'react-native';
 import IconButton from '../components/UI/IconButton';
 import { GlobalColors } from '../constants/colors';
 import Button from '../components/UI/Button';
 import { ExpenseContext } from './store/expense-context';
 
-function ManageExpenses({route}){
+function ManageExpenses({route, navigation}){
     const expenseCtx = useContext(ExpenseContext);
 
     //making sure that expenseItemId is not null, then we check if Id is truthy or falsy.
@@ -14,18 +14,17 @@ function ManageExpenses({route}){
     // the !! before a value can make it either truthy or false. It is javascript way do converting a value to a boolean.
     const isEditing = !!editExpenseItemId;
 
-    const navigation = useNavigation();
-
     useLayoutEffect(() => {
         navigation.setOptions({
             title: isEditing ? 'Edit Expense' : 'Add Expense',
-        },
+        });
+    },
      [navigation, isEditing]);
-    });
 
     function deleteItemHandler(){
         expenseCtx.deleteExpense(editExpenseItemId);
         navigation.goBack();
+        console.log('deleted');
     }
 
     function cancelButtonHandler(){
@@ -40,6 +39,7 @@ function ManageExpenses({route}){
                 date: new Date('2024-12-01'),
             }
             );
+            console.log('updated');
         }
         else{
             expenseCtx.addExpense({
@@ -59,12 +59,12 @@ function ManageExpenses({route}){
             </View>
             {
                 isEditing && 
-            <View style={styles.deleteContainer}>
+            (<View style={styles.deleteContainer}>
                 <IconButton icon="trash" size={36} color={GlobalColors.colors.error500} onPress={deleteItemHandler}/>
             </View>
-            }
+            )}
         </View>
-        )
+        );
 }
 
 export default ManageExpenses;
@@ -90,6 +90,5 @@ const styles = StyleSheet.create({
     button:{
         marginHorizontal: 8,
         minWidth: 120,
-
     }
 })
