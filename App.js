@@ -11,6 +11,8 @@ import { GlobalColors } from './constants/colors';
 import {Ionicons} from '@expo/vector-icons'
 import IconButton from './components/UI/IconButton';
 
+import ExpenseContextProvider from './screens/store/expense-context';
+
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -56,6 +58,7 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
+      <ExpenseContextProvider>
         <NavigationContainer>
             <Stack.Navigator screenOptions={{
               headerTintColor: 'white',
@@ -68,6 +71,7 @@ export default function App() {
               }}/>
             </Stack.Navigator>
         </NavigationContainer>
+      </ExpenseContextProvider>
     </>
     );
   }
