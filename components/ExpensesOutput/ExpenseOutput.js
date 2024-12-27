@@ -3,12 +3,12 @@ import ExpenseSummary from "./ExpenseSummary";
 import ExpenseList from './ExpenseList';
 import { GlobalColors } from "../../constants/colors";
 
-function ExpenseOutput({expense, period}){
+function ExpenseOutput({expenses, period}){
     
     return (
         <View style={styles.container}>
-            <ExpenseSummary expense={Dummy_expense} expensesPeriod={period}/>
-            <ExpenseList expenses={Dummy_expense}/>
+            <ExpenseSummary expense={expenses} expensesPeriod={period}/>
+            <ExpenseList expenses={expenses}/>
         </View>
     );
 }

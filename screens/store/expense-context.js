@@ -80,7 +80,7 @@ function expenseReducer(state, action){
 // which has the access to implement the context API in all over the application.
 
 
-function ExpenseContextProvider({children}){
+export default function ExpenseContextProvider({children}){
 
     // useReducer() is the hook responsible to manage the the state and used to dispatch the 
     // actions by taking the set of described action from the expenseReducer function from line 46. 
