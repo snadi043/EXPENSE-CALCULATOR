@@ -9,6 +9,8 @@ import {useNavigation} from '@react-navigation/native';
 function ExpenseItem({id, description, date, amount}){
 
     const navigation = useNavigation();
+
+    // const amountFixed = amount.toFixed(2); 
     
     function expenseListPressHandler(){
         navigation.navigate('ManageExpenses', {
@@ -27,7 +29,7 @@ function ExpenseItem({id, description, date, amount}){
 
                 </View>
                 <View style={styles.amountContainer}>
-                    <Text style={styles.amount}>{amount.toFixed(2)}</Text>
+                    <Text style={styles.amount}>{amount}</Text>
                 </View>
             </View>
         </Pressable>

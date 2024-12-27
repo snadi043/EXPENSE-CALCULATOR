@@ -1,11 +1,14 @@
 import {View, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useLayoutEffect } from 'react';
+import { useContext, useLayoutEffect } from 'react';
 import IconButton from '../components/UI/IconButton';
 import { GlobalColors } from '../constants/colors';
 import Button from '../components/UI/Button';
+import { ExpenseContext } from './store/expense-context';
 
 function ManageExpenses({route}){
+    const expenseCtx = useContext(ExpenseContext);
+
     //making sure that expenseItemId is not null, then we check if Id is truthy or falsy.
     const editExpenseItemId = route.params?.expenseItemId;
     // the !! before a value can make it either truthy or false. It is javascript way do converting a value to a boolean.
@@ -21,6 +24,7 @@ function ManageExpenses({route}){
     });
 
     function deleteItemHandler(){
+        expenseCtx.deleteExpense(editExpenseItemId);
         navigation.goBack();
     }
 
@@ -29,6 +33,21 @@ function ManageExpenses({route}){
     }
 
     function confirmButtonHandler(){
+        if(isEditing){
+            expenseCtx.updateExpense(editExpenseItemId, {
+                description: 'UPDATED_EXPENSE',
+                amount: 35.55,
+                date: new Date('2024-12-01'),
+            }
+            );
+        }
+        else{
+            expenseCtx.addExpense({
+                description: 'ADD_ITEM',
+                amount: 25.99,
+                date: new Date('2024-12-27'),
+            });
+        }
         navigation.goBack();
     }
     
