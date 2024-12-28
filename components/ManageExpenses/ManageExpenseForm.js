@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Alert} from 'react-native';
 import ManageInput from './ManageInput';
 import Button from '../UI/Button';
 import { getFormattedDate } from '../../utilities/date';
@@ -34,8 +34,19 @@ function ManageExpenseForm({onCancel, submitHandlerLabel, onSubmit, defaultInput
              date: new Date(inputValues.date),
              description: inputValues.description
             };
+
+            const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0; 
+            const dateIsValid = expenseData.date.toString() !== 'Invalid Date';
+            const descriptionIsValid = expenseData.description.trim().length > 0;
+            
+            if(!amountIsValid || !dateIsValid || !descriptionIsValid){
+                Alert.alert('please enter valid input values');
+                return;
+            }
+
             onSubmit(expenseData);
          }
+         
     return (
         <View style={styles.formContainer}>
             <Text style={styles.textTitle}>Manage Your Expenses</Text>
