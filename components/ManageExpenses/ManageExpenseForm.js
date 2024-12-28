@@ -1,11 +1,29 @@
+import { useState } from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import ManageInput from './ManageInput';
 
 function ManageExpenseForm(){
-    function amountChangeHandler(){
-
-    }
-
+     //using the useState() hook to manage the form wide state with the generic procedure and  
+     // setting an object with empty strings as an initial state values to all the values which are expected to handle later.
+        const [inputValues, setInputValues] = useState({
+            amount: '',
+            date: '',
+            description: ''
+        });
+    
+        //configuring single function to manage all the state changes by identifying the required state modifications.
+        //enteredValues is the parameter which is provided by the react on the input elements.
+        function inputValuesChangeHandler(inputIdentifier, enteredValues){
+            // In this changeHandler function we manage the state using the setState() 
+            // function which is done immutably based on the previous state. 
+            setInputValues((currentInputValue) => {
+                return {
+                    ...currentInputValue,
+                    [inputIdentifier]: enteredValues,
+            }
+        }
+        );
+        }
     return (
         <View style={styles.formContainer}>
             <Text style={styles.textTitle}>Manage Your Expenses</Text>
@@ -14,7 +32,9 @@ function ManageExpenseForm(){
                     style={styles.input}
                         textInputConfig={{
                             KeyboardType: 'decimal-pad',
-                            onChangeText: amountChangeHandler,
+                            // using the bind() method to handle the future changes when the amount input filed is changed.
+                            onChangeText: inputValuesChangeHandler.bind(this, 'amount'),
+                            value: inputValues.amount,
                         }}
                     />
                     <ManageInput label="Date"
@@ -23,7 +43,9 @@ function ManageExpenseForm(){
                             KeyboardType: 'default',
                             maxLength: 10,
                             placeholder: 'YYYY-DD-MM',
-                            onChangeText: () => {}
+                            // using the bind() method to handle the future changes when the date input filed is changed.
+                            onChangeText: inputValuesChangeHandler.bind(this, 'date'),
+                            value: inputValues.date
                         }
                         }
                     />
@@ -32,7 +54,9 @@ function ManageExpenseForm(){
             <ManageInput label="Description"
                 textInputConfig={{
                     multiline: true,
-                    onChangeText: () => {}
+                    // using the bind() method to handle the future changes when the description input filed is changed.
+                    onChangeText: inputValuesChangeHandler.bind(this, 'description'),
+                    value: inputValues.description
                 }}
             />
         </View>

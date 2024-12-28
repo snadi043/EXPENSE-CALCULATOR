@@ -1,5 +1,6 @@
 import {View, TextInput, Text, StyleSheet} from 'react-native';
 import {GlobalColors} from '../../constants/colors';
+import { useState } from 'react';
 
 function ManageInput({label, textInputConfig, style}){
 
@@ -33,8 +34,9 @@ const styles=StyleSheet.create({
         borderRadius: 6,
         backgroundColor: GlobalColors.colors.primary100,
         fontSize: 18,
-        color: GlobalColors.colors.primary100,
+        color: 'white',
         padding: 8,
+        fontWeight: 600
     },
     multiline:{
         minHeight: 120,
