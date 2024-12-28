@@ -14,6 +14,8 @@ function ManageExpenses({route, navigation}){
     // the !! before a value can make it either truthy or false. It is javascript way do converting a value to a boolean.
     const isEditing = !!editExpenseItemId;
 
+    const updateExpense = expenseCtx.expenses.find((expense) => expense.id === editExpenseItemId);
+
     useLayoutEffect(() => {
         navigation.setOptions({
             title: isEditing ? 'Edit Expense' : 'Add Expense',
@@ -49,6 +51,7 @@ function ManageExpenses({route, navigation}){
                 onCancel={cancelButtonHandler} 
                 submitHandlerLabel={isEditing ? 'Update' : 'Add'}
                 onSubmit={confirmButtonHandler}
+                defaultInputValues={updateExpense}
                 />
             {isEditing && 
             (<View style={styles.deleteContainer}>

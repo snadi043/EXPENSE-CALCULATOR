@@ -2,15 +2,16 @@ import { useState } from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import ManageInput from './ManageInput';
 import Button from '../UI/Button';
+import { getFormattedDate } from '../../utilities/date';
 
-function ManageExpenseForm({onCancel, submitHandlerLabel, onSubmit}){
+function ManageExpenseForm({onCancel, submitHandlerLabel, onSubmit, defaultInputValues}){
 
      //using the useState() hook to manage the form wide state with the generic procedure and  
      // setting an object with empty strings as an initial state values to all the values which are expected to handle later.
         const [inputValues, setInputValues] = useState({
-            amount: '',
-            date: '',
-            description: ''
+            amount: defaultInputValues ? defaultInputValues.amount.toString() : '',
+            date: defaultInputValues ? getFormattedDate(defaultInputValues.date) : '',
+            description: defaultInputValues ? defaultInputValues.description : '',
         });
     
         //configuring single function to manage all the state changes by identifying the required state modifications.
