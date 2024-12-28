@@ -1,6 +1,5 @@
 import {View, TextInput, Text, StyleSheet} from 'react-native';
 import {GlobalColors} from '../../constants/colors';
-import { useState } from 'react';
 
 function ManageInput({label, textInputConfig, style}){
 

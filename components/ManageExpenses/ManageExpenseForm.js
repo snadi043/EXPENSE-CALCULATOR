@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import ManageInput from './ManageInput';
+import Button from '../UI/Button';
 
-function ManageExpenseForm(){
+function ManageExpenseForm({onCancel, submitHandlerLabel, onSubmit}){
+
      //using the useState() hook to manage the form wide state with the generic procedure and  
      // setting an object with empty strings as an initial state values to all the values which are expected to handle later.
         const [inputValues, setInputValues] = useState({
@@ -24,6 +26,15 @@ function ManageExpenseForm(){
         }
         );
         }
+
+        function submitHandler(){
+            const expenseData = {
+             amount: +inputValues.amount,
+             date: new Date(inputValues.date),
+             description: inputValues.description
+            };
+            onSubmit(expenseData);
+         }
     return (
         <View style={styles.formContainer}>
             <Text style={styles.textTitle}>Manage Your Expenses</Text>
@@ -59,6 +70,10 @@ function ManageExpenseForm(){
                     value: inputValues.description
                 }}
             />
+            <View style={styles.buttonsContainer}>
+                <Button style={styles.button} mode="flat" onPress={onCancel}>Cancel</Button>
+                <Button style={styles.button} onPress={submitHandler}>{submitHandlerLabel}</Button>
+            </View>
         </View>
     )
 }
@@ -82,5 +97,14 @@ const styles = StyleSheet.create({
     },
     input:{
         flex: 1,
+    },
+    buttonsContainer:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    button:{
+        marginHorizontal: 8,
+        minWidth: 120,
     }
 });
