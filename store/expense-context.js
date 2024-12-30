@@ -53,13 +53,13 @@ function expenseReducer(state, action){
 
         case 'ADD':
         const id = new Date().toString() + Math.random().toString();
-          return [{...action.payload, id: id}, ...state];
+          return [{ ...action.payload, id: id}, ...state];
         
         //DELETE logic is written under this case and this 
         // DELETE type is linked to the dispatch type in the <ExpenseContext.Provider>
 
         case 'DELETE':
-            return state.filter((expense) => expense.id !== action.payload.id);
+            return state.filter((expense) => expense.id !== action.payload);
 
         //UPDATE logic is written under this case and this 
         //UPDATE type is linked to the dispatch type in the <ExpenseContext.Provider>
@@ -67,7 +67,7 @@ function expenseReducer(state, action){
         case 'UPDATE':
             const updatableExpenseIndex = state.findIndex((expense) => expense.id === action.payload.id);
             const updatableExpense = state[updatableExpenseIndex];
-            const updatedItem = {...updatableExpense, ...action.payload.data};
+            const updatedItem = { ...updatableExpense, ...action.payload.data};
             const updatedExpense = [...state];
             updatedExpense[updatableExpenseIndex] = updatedItem;
             return updatedExpense;
@@ -93,7 +93,7 @@ export default function ExpenseContextProvider({children}){
     // and inject the payload into the state when the particular action is made.
 
     function addExpense(expenseData){
-        dispatch({type: 'ADD', payload: {expenseData}});
+        dispatch({type: 'ADD', payload: expenseData});
     }
 
     function deleteExpense(id){

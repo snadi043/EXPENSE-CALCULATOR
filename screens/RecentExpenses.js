@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet} from 'react-native';
 import ExpenseOutput from '../components/ExpensesOutput/ExpenseOutput';
 import { useContext } from 'react';
-import { ExpenseContext } from './store/expense-context';
+import { ExpenseContext } from '../store/expense-context';
 import { day7DaysAgo } from '../utilities/date';
 
 function RecentExpenses(){

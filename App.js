@@ -11,8 +11,7 @@ import { GlobalColors } from './constants/colors';
 import {Ionicons} from '@expo/vector-icons'
 import IconButton from './components/UI/IconButton';
 
-import ExpenseContextProvider from './screens/store/expense-context';
-
+import ExpenseContextProvider from './store/expense-context';
 
 export default function App() {
   const Stack = createNativeStackNavigator();

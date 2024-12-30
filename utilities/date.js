@@ -16,13 +16,13 @@
 
 
 export function getFormattedDate(inputDate) {
-  if(typeof inputDate === 'string'){
-    return new Date(
-      value.replace(/(\d\d)\/(\d\d)\/(\d{4})/, (full, d, m, y) => `${y}-${m}-${d}T12:00:00.000z`)
-    )
-    `${inputDate.getFullYear()}-${inputDate.getMonth() + 1}-${inputDate.getDate()}`;
+  // if(typeof inputDate === 'string'){
+  //   return new Date(
+  //     value.replace(/(\d\d)\/(\d\d)\/(\d{4})/, (full, d, m, y) => `${y}-${m}-${d}T12:00:00.000z`)
+  //   )
+    return inputDate?.toISOString().slice(0, 10);
   }
-  }
+  // }
 
 export function day7DaysAgo(inputDate, days){
   return new Date(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate() - days);
