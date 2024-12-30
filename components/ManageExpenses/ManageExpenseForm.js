@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {View, StyleSheet, Text, Alert} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import ManageInput from './ManageInput';
 import Button from '../UI/Button';
 import { getFormattedDate } from '../../utilities/date';
@@ -51,8 +51,8 @@ function ManageExpenseForm({onCancel, submitHandlerLabel, onSubmit, defaultInput
             };
 
             const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0; 
-            const dateIsValid = expenseData.date.toString() !== 'Invalid Date';
-            const descriptionIsValid = expenseData.description.trim().length > 0;
+            const dateIsValid = expenseData.date?.toString() !== 'Invalid Date';
+            const descriptionIsValid = expenseData.description?.trim().length > 0;
             
             if(!amountIsValid || !dateIsValid || !descriptionIsValid){
                 // Alert.alert('please enter valid input values');
@@ -68,7 +68,7 @@ function ManageExpenseForm({onCancel, submitHandlerLabel, onSubmit, defaultInput
 
             onSubmit(expenseData);
          }
-    const formIsValid = !inputs.amount.value || !inputs.date.value || !inputs.description.value;
+    const formIsInValid = !inputs.amount.isValid || !inputs.date.isValid || !inputs.description.isValid;
 
     return (
         <View style={styles.formContainer}>
@@ -108,7 +108,7 @@ function ManageExpenseForm({onCancel, submitHandlerLabel, onSubmit, defaultInput
                     value: inputs.description.value,
                 }}
             />
-            {formIsValid && <Text style={styles.errorText}>Please check your entered input values.</Text>}
+            {formIsInValid && <Text style={styles.errorText}>Please check your entered input values.</Text>}
             <View style={styles.buttonsContainer}>
                 <Button style={styles.button} mode="flat" onPress={onCancel}>Cancel</Button>
                 <Button style={styles.button} onPress={submitHandler}>{submitHandlerLabel}</Button>

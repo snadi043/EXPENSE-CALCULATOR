@@ -20,7 +20,7 @@ export function getFormattedDate(inputDate) {
   //   return new Date(
   //     value.replace(/(\d\d)\/(\d\d)\/(\d{4})/, (full, d, m, y) => `${y}-${m}-${d}T12:00:00.000z`)
   //   )
-    return inputDate.toISOString().slice(0, 10);
+    return inputDate?.toISOString().slice(0, 10);
   }
   // }
 

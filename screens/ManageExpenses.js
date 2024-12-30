@@ -3,7 +3,7 @@ import { useContext, useLayoutEffect } from 'react';
 import {View, StyleSheet} from 'react-native';
 import IconButton from '../components/UI/IconButton';
 import { GlobalColors } from '../constants/colors';
-import { ExpenseContext } from './store/expense-context';
+import { ExpenseContext } from '../store/expense-context';
 import ManageExpenseForm from '../components/ManageExpenses/ManageExpenseForm';
 
 function ManageExpenses({route, navigation}){
@@ -26,7 +26,6 @@ function ManageExpenses({route, navigation}){
     function deleteItemHandler(){
         expenseCtx.deleteExpense(editExpenseItemId);
         navigation.goBack();
-        console.log('deleted');
     }
 
     function cancelButtonHandler(){
@@ -36,11 +35,9 @@ function ManageExpenses({route, navigation}){
     function confirmButtonHandler(expenseData){
         if(isEditing){
             expenseCtx.updateExpense(editExpenseItemId, expenseData);
-            console.log('updated');
         }
         else{
             expenseCtx.addExpense(expenseData);
-            console.log('added');
         }
         navigation.goBack();
     }
