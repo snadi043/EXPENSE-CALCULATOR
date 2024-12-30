@@ -22,7 +22,7 @@ function ExpenseItem({id, description, date, amount}){
                 <View>
                     <Text style={[styles.textBatch ,styles.description]}>{description}</Text>
                     {/* <Text style={[styles.textBatch]}>{getFormattedDate(date)}</Text> */}
-                    <Text style={[styles.textBatch]}>{getFormattedDate(date)}</Text>
+                    <Text style={styles.textBatch}>{getFormattedDate(date)}</Text>
                 </View>
                 <View style={styles.amountContainer}>
                     <Text style={styles.amount}>{amount.toFixed(2)}</Text>
