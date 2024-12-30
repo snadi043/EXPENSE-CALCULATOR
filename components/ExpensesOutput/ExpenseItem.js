@@ -9,14 +9,11 @@ import { getFormattedDate } from '../../utilities/date';
 function ExpenseItem({id, description, date, amount}){
 
     const navigation = useNavigation();
-
-    // const amountFixed = amount.toFixed(2); 
     
     function expenseListPressHandler(){
         navigation.navigate('ManageExpenses', {
             expenseItemId: id,
         });
-        // console.log('pressed');
     }
 
     return (
