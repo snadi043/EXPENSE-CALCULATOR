@@ -20,8 +20,7 @@ function expenseReducer(state, action){
         // ADD type is linked to the dispatch type in the <ExpenseContext.Provider>
 
         case 'ADD':
-        const id = new Date().toString() + Math.random().toString();
-          return [{ ...action.payload, id: id}, ...state];
+          return [action.payload, ...state];
         
         //DELETE logic is written under this case and this 
         // DELETE type is linked to the dispatch type in the <ExpenseContext.Provider>
@@ -42,7 +41,8 @@ function expenseReducer(state, action){
         
         //SET_EXPENSE function to update the expense state when the expenses are fetched from the backend database
         case 'SET_EXPENSE':
-            return action.payload;
+            const inverted = action.payload.reverse();
+            return inverted;
         default:
             return state;
     }
