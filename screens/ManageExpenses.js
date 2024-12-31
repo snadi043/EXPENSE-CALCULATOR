@@ -1,4 +1,4 @@
-import { useContext, useLayoutEffect } from 'react';
+import { useContext, useLayoutEffect, useState } from 'react';
 
 import {View, StyleSheet} from 'react-native';
 import IconButton from '../components/UI/IconButton';
@@ -6,9 +6,12 @@ import { GlobalColors } from '../constants/colors';
 import { ExpenseContext } from '../store/expense-context';
 import ManageExpenseForm from '../components/ManageExpenses/ManageExpenseForm';
 import { storeExpense, deleteExpense, modifyExpense } from '../utilities/http';
+import LoadingOverlay from '../components/UI/LoadingOverlay';
 
 function ManageExpenses({route, navigation}){
     const expenseCtx = useContext(ExpenseContext);
+
+    const [isTransforming, setIsTransforming] = useState(false);
 
     //making sure that expenseItemId is not null, then we check if Id is truthy or falsy.
     const editExpenseItemId = route.params?.expenseItemId;
@@ -25,6 +28,7 @@ function ManageExpenses({route, navigation}){
      [navigation, isEditing]);
 
      async function deleteItemHandler(){
+        setIsTransforming(true);
         await deleteExpense(editExpenseItemId);
         expenseCtx.deleteExpense(editExpenseItemId);
         navigation.goBack();
@@ -35,6 +39,7 @@ function ManageExpenses({route, navigation}){
     }
 
     async function confirmButtonHandler(expenseData){
+        setIsTransforming(true)
         if(isEditing){
             expenseCtx.updateExpense(editExpenseItemId, expenseData);
             await modifyExpense(editExpenseItemId, expenseData);
@@ -45,7 +50,9 @@ function ManageExpenses({route, navigation}){
         }
         navigation.goBack();
     }
-    
+    if(isTransforming){
+        return <LoadingOverlay />
+    }
     return (
         <View style={styles.container}>
             <ManageExpenseForm 

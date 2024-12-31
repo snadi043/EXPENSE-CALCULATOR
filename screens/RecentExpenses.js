@@ -1,13 +1,16 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text} from 'react-native';
 import ExpenseOutput from '../components/ExpensesOutput/ExpenseOutput';
 import { useContext, useEffect, useState } from 'react';
 import { ExpenseContext } from '../store/expense-context';
 import { day7DaysAgo } from '../utilities/date';
 
 import { getExpenses } from '../utilities/http';
+import LoadingOverlay from '../components/UI/LoadingOverlay';
 
 function RecentExpenses(){
     const expenseCtx = useContext(ExpenseContext);
+
+    const [isFetching, setIsFetching] = useState(true);
 
     // const [fetchedExpenses, setFetchedExpenses] = useState([]);
 
@@ -23,7 +26,9 @@ function RecentExpenses(){
 
     useEffect(() => {
         async function fetchExpenses(){
+            setIsFetching(true);
             const expense = await getExpenses();
+            setIsFetching(false);
             expenseCtx.setFetchedExpense(expense);
         }
         fetchExpenses();
@@ -35,6 +40,10 @@ function RecentExpenses(){
         return (expense.date >= sevenDaysAgo) && expense.date <= today;
     });
 
+    if (isFetching){
+        return <LoadingOverlay />
+    }
+
     return (<View>
         <Text>
             <ExpenseOutput period="Last 7 days" expenses={recentExpense} informationText="No recent expenses found in last 7 days."/>
@@ -43,7 +52,3 @@ function RecentExpenses(){
 }
 
 export default RecentExpenses; 
-
-const styles = StyleSheet.create({
-
-})
