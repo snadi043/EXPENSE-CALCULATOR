@@ -35,3 +35,11 @@ export async function getExpenses(){
    }
    return expenses;
 }
+
+export function modifyExpense(id, expenseData){
+    return axios.put(EXPENSE_TRACKER_BACKEND_URL + `/expenses/${id}.json`, expenseData);
+}
+
+export function deleteExpense(id){
+    return axios.delete(EXPENSE_TRACKER_BACKEND_URL + `/expenses/${id}.json`);
+}
