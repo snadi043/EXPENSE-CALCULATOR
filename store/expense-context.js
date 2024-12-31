@@ -1,44 +1,12 @@
 import { createContext, useReducer } from "react";
 
-const Dummy_expense = [
-    {
-        id: 'e1',
-        description: 'Iphone 16 Pro',
-        amount: 1699.99,
-        date: new Date('2024-07-14'),
-    },
-    {
-        id: 'e2',
-        description: 'Bus Pass',
-        amount: 16.00,
-        date: new Date('2024-03-09'),
-    },
-    {
-        id: 'e3',
-        description: 'Credit Card Bill',
-        amount: 199.89,
-        date: new Date('2024-05-29'),
-    },
-    {
-        id: 'e4',
-        description: 'Christmas Shopping',
-        amount: 649.30,
-        date: new Date('2024-12-14'),
-    },
-    {
-        id: 'e5',
-        description: 'Buss Pass',
-        amount: 199.99,
-        date: new Date('2024-12-05'),
-    }
-];
-
 //created an object as a skeleton for utilizing the context API using createContext hook and adding 
 // all the expected information to help with auto completion while using them in the application.
 
 export const ExpenseContext = createContext({
     expenses: [],
     addExpense: ({description, date, amount}) => {},
+    setExpense: (expense) => {},
     deleteExpense: (id) => {},
     updateExpense: (id, {description, date, amount}) => {}
 });
@@ -52,8 +20,7 @@ function expenseReducer(state, action){
         // ADD type is linked to the dispatch type in the <ExpenseContext.Provider>
 
         case 'ADD':
-        const id = new Date().toString() + Math.random().toString();
-          return [{ ...action.payload, id: id}, ...state];
+          return [action.payload, ...state];
         
         //DELETE logic is written under this case and this 
         // DELETE type is linked to the dispatch type in the <ExpenseContext.Provider>
@@ -71,6 +38,11 @@ function expenseReducer(state, action){
             const updatedExpense = [...state];
             updatedExpense[updatableExpenseIndex] = updatedItem;
             return updatedExpense;
+        
+        //SET_EXPENSE function to update the expense state when the expenses are fetched from the backend database
+        case 'SET_EXPENSE':
+            const inverted = action.payload.reverse();
+            return inverted;
         default:
             return state;
     }
@@ -87,7 +59,7 @@ export default function ExpenseContextProvider({children}){
 
     // Dummy_expense is the initial state value which useReducer hooks expects before it runs for the first time.
 
-    const [expenseState, dispatch] = useReducer(expenseReducer, Dummy_expense);
+    const [expenseState, dispatch] = useReducer(expenseReducer, []);
     
     // All the functions below are responsible to dispatch the particular actions based on the type 
     // and inject the payload into the state when the particular action is made.
@@ -104,6 +76,10 @@ export default function ExpenseContextProvider({children}){
         dispatch({type: 'UPDATE', payload: {id: id, data: expenseData}})
     }
 
+    function setFetchedExpense(expense){
+        dispatch({type: 'SET_EXPENSE', payload: expense});
+    }
+
     // value object is an input that has to be seeded to the value prop 
     // on the Provider element to co-ordinate with the actions in the context API.
 
@@ -112,6 +88,7 @@ export default function ExpenseContextProvider({children}){
         addExpense: addExpense,
         deleteExpense: deleteExpense,
         updateExpense: updateExpense,
+        setFetchedExpense: setFetchedExpense,
     }
 
     return <ExpenseContext.Provider value={value}>
