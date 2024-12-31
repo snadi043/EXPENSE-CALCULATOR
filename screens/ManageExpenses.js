@@ -7,11 +7,14 @@ import { ExpenseContext } from '../store/expense-context';
 import ManageExpenseForm from '../components/ManageExpenses/ManageExpenseForm';
 import { storeExpense, deleteExpense, modifyExpense } from '../utilities/http';
 import LoadingOverlay from '../components/UI/LoadingOverlay';
+import ErrorOverlay from '../components/UI/ErrorOverlay';
 
 function ManageExpenses({route, navigation}){
     const expenseCtx = useContext(ExpenseContext);
 
     const [isTransforming, setIsTransforming] = useState(false);
+
+    const [error, setError] = useState();
 
     //making sure that expenseItemId is not null, then we check if Id is truthy or falsy.
     const editExpenseItemId = route.params?.expenseItemId;
@@ -28,10 +31,16 @@ function ManageExpenses({route, navigation}){
      [navigation, isEditing]);
 
      async function deleteItemHandler(){
-        setIsTransforming(true);
-        await deleteExpense(editExpenseItemId);
-        expenseCtx.deleteExpense(editExpenseItemId);
-        navigation.goBack();
+         setIsTransforming(true);
+        try{
+            await deleteExpense(editExpenseItemId);
+            expenseCtx.deleteExpense(editExpenseItemId);
+            navigation.goBack();
+        }
+        catch(error){
+            setError('Could not delete the expense. Please try again later');
+            isTransforming(false);
+        }
     }
 
     function cancelButtonHandler(){
@@ -40,18 +49,35 @@ function ManageExpenses({route, navigation}){
 
     async function confirmButtonHandler(expenseData){
         setIsTransforming(true)
-        if(isEditing){
-            expenseCtx.updateExpense(editExpenseItemId, expenseData);
-            await modifyExpense(editExpenseItemId, expenseData);
+        try{
+            if(isEditing){
+                expenseCtx.updateExpense(editExpenseItemId, expenseData);
+                await modifyExpense(editExpenseItemId, expenseData);
+            }
+            else{
+                const id = await storeExpense(expenseData);
+                expenseCtx.addExpense({ ...expenseData, id: id});
+            }
+            navigation.goBack();
         }
-        else{
-            const id = await storeExpense(expenseData);
-            expenseCtx.addExpense({ ...expenseData, id: id});
+        catch(error){
+            setError('Could not save data. Please try again later');
+            isTransforming(false);
         }
-        navigation.goBack();
     }
+
+    function errorHandler(){
+        setError(null);
+    }
+
     if(isTransforming){
         return <LoadingOverlay />
+    }
+    if(error && !isTransforming){
+        return <ErrorOverlay 
+            message={error}
+            onConfirm={errorHandler}
+        />
     }
     return (
         <View style={styles.container}>
